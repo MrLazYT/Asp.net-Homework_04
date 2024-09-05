@@ -1,0 +1,35 @@
+﻿@page
+@model homework_04.Pages.Movies.AddModel
+@{
+}
+
+<form method="post">
+	<div>
+		<label class="form-label m-1" asp-for="Movie.Title">Назва</label>
+		<input class="form-control m-1" asp-for="Movie.Title" />
+	</div>
+
+	<div>
+		<label class="form-label m-1" asp-for="Movie.Poster">Постер</label>
+		<input class="form-control m-1" asp-for="Movie.Poster" />
+	</div>
+
+	<div>
+		<label class="form-label m-1" asp-for="Movie.Director">Режисер</label>
+		<input class="form-control m-1" asp-for="Movie.Director" />
+	</div>
+
+	<div>
+		<label class="form-label m-1" asp-for="Movie.Style">Жанр</label>
+		<input class="form-control m-1" asp-for="Movie.Style" />
+	</div>
+
+	<div>
+		<label class="form-label m-1" asp-for="Movie.ShortDescription">Короткий опис</label>
+		<input class="form-control m-1" asp-for="Movie.ShortDescription" />
+	</div>
+
+	<div>
+		<button class="btn btn-primary m-1">Додати</button>
+	</div>
+</form>

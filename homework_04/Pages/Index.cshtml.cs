@@ -16,11 +16,11 @@ namespace homework_04.Pages
             _logger = logger;
         }
 
-        public void OnGet()
+        public IActionResult OnGet()
         {
             MovieService.Seed();
 
-            Movies = MovieService.GetAll();
+            return RedirectToPage("/Movies/Index");
         }
     }
 }

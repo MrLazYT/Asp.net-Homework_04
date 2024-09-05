@@ -1,0 +1,20 @@
+﻿@page "{movieId:int}/{sessionId:int}"
+@model homework_04.Pages.Sessions.EditModel
+@{
+}
+
+<form method="post">
+	<div>
+		<label class="form-label m-1" asp-for="Session.Date">Дата</label>
+		<input class="form-control m-1" type="date" asp-for="Session.Date" />
+	</div>
+
+	<div>
+		<label class="form-label m-1" asp-for="Session.Time">Час</label>
+		<input class="form-control m-1" type="time" asp-for="Session.Time" />
+	</div>
+
+	<div>
+		<button class="btn btn-primary m-1" asp-route-movieId="@Model.MovieId" asp-route-sessionId="@Model.Session.Id">Додати</button>
+	</div>
+</form>

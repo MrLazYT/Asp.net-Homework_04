@@ -4,6 +4,7 @@ namespace homework_04.Services
 {
     public static class MovieService
     {
+        private static int id = 1;
         private static List<Movie> Movies { get; set; }
 
         public static void Seed()
@@ -12,7 +13,7 @@ namespace homework_04.Services
             {
                 new Movie()
                 {
-                    Id = 1,
+                    Id = id++,
                     Title = "Підбурювачі",
                     Poster = "https://uaserials.pro/posters/8929.jpg",
                     Director = "Даг Лайман",
@@ -46,7 +47,7 @@ namespace homework_04.Services
                 },
                 new Movie()
                 {
-                    Id = 2,
+                    Id = id++,
                     Title = "Королівство планети мавп",
                     Poster = "https://uaserials.pro/posters/8871.jpg",
                     Director = "Вес Болл",
@@ -80,7 +81,7 @@ namespace homework_04.Services
                 },
                 new Movie()
                 {
-                    Id = 3,
+                    Id = id++,
                     Title = "Забери мене на місяць",
                     Poster = "https://uaserials.pro/posters/8983.jpg",
                     Director = "Грег Берланті",
@@ -117,7 +118,7 @@ namespace homework_04.Services
                 },
                 new Movie()
                 {
-                    Id = 4,
+                    Id = id++,
                     Title = "Казки на ніч",
                     Poster = "https://uaserials.pro/posters/8988.jpg",
                     Director = "Адам Шенкман",
@@ -149,7 +150,7 @@ namespace homework_04.Services
                 },
                 new Movie()
                 {
-                    Id = 5,
+                    Id = id++,
                     Title = "Каскадер",
                     Poster = "https://uaserials.pro/posters/8678.jpg",
                     Director = "Девід Літч",
@@ -186,8 +187,89 @@ namespace homework_04.Services
             };
         }
 
-        public static List<Movie> GetAll() => Movies;
+        public static List<Movie> GetAllMovies() => Movies;
 
-        public static Movie GetById(int id) => Movies.FirstOrDefault(movie => movie.Id == id)!;
+        public static Movie GetMovieById(int id) => Movies.FirstOrDefault(movie => movie.Id == id)!;
+
+        public static List<Movie> FindMovieByTitle(string searchValue)
+        {
+            string lowerSearchValue = searchValue.ToLower();
+
+            IEnumerable<Movie> MovieEnumerable = Movies.FindAll(
+                movie =>
+                {
+                    string title = movie.Title;
+                    string lowerTitle = title.ToLower();
+
+                    return lowerTitle.Contains(lowerSearchValue);
+                }
+            );
+
+            return MovieEnumerable.ToList();
+        }
+
+        public static void AddMovie(Movie Movie)
+        {
+            Movie.Id = id++;
+
+            Movies.Add(Movie);
+        }
+
+        public static int GetMovieIndex(int movieId) => Movies.FindIndex(movie => movie.Id == movieId);
+
+        public static void UpdateMovie(Movie movie)
+        {
+            int id = movie.Id;
+            int index = GetMovieIndex(id);
+
+			Movies[index] = movie;
+        }
+
+        public static void DeleteMovieById(int id)
+        {
+            Movie movie = GetMovieById(id);
+
+            Movies.Remove(movie);
+        }
+
+        public static void AddSession(int id, Session session)
+        {
+            Movie movie = GetMovieById(id);
+            movie.Sessions.Add(session);
+
+            UpdateMovie(movie);
+        }
+
+        public static Session GetSessionById(int movieId, int sessionId)
+        {
+            Movie movie = GetMovieById(movieId);
+            Session session = movie.Sessions.Find(session => session.Id == sessionId)!;
+
+            return session;
+        }
+
+        public static void DeleteSessionById(int movieId, int sessionId)
+        {
+            Session session = GetSessionById(movieId, sessionId);
+            Movie movie = GetMovieById(movieId);
+            
+            movie.Sessions.Remove(session);
+        }
+
+        public static int GetSessionIndex(Movie movie, int sessionId)
+        {
+            return movie.Sessions.FindIndex(s => s.Id == sessionId);
+		}
+
+        public static void UpdateSession(int movieId, Session session)
+        {
+            Movie movie = GetMovieById(movieId);
+            int sessionId = session.Id;
+            int index = GetSessionIndex(movie, sessionId);
+            
+            movie.Sessions[index] = session;
+
+            UpdateMovie(movie);
+        }
     }
 }

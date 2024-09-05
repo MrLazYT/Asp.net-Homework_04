@@ -1,4 +1,4 @@
-﻿@page "{id?}"
+﻿@page "{id:int}"
 @model homework_04.Pages.Movies.InfoModel
 @{
 }
@@ -16,32 +16,46 @@
                 <p>@Model.Movie.Style</p>
                 <p>@Model.Movie.ShortDescription</p>
             </div>
+
+            <div>
+                <a class="btn btn-primary m-1 text-end" asp-page="Edit" asp-route-id="@Model.Movie.Id">Редагувати</a>
+            </div>
         </div>
 
-        < class="row">
-            <h2>Sessions</h2>
+        <h2>Сеанси</h2>
 
-            <div class="col">
-                <table class="table table-info">
-                    <thead>
+        <div class="container">
+            <a class="btn btn-primary m-1 text-start" asp-page="../Sessions/Add" asp-route-id="@Model.Movie.Id">Додати</a>
+        </div>
+
+        <div class="col">
+            <table class="table table-info">
+                <thead>
+                    <tr>
+                        <th scope="col">Ід</th>
+                        <th scope="col">Дата</th>
+                        <th scope="col">Час</th>
+                        <th scope="col">Взаємодія</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach(var session in Model.Movie.Sessions)
+                    {
                         <tr>
-                            <th scope="col">Id</th>
-                            <th scope="col">Date</th>
-                            <th scope="col">Time</th>
+                            <th scope="row">@session.Id</th>
+                            <td>@session.Date.ToShortDateString()</td>
+                            <td>@session.Time</td>
+                            <td>
+                                <form method="post">
+                                    <a class="btn btn-primary m-1" asp-page="../Sessions/Edit" asp-route-movieId="@Model.Movie.Id" asp-route-sessionId="@session.Id">Редагувати</a>
+                                    <button class="btn btn-danger m-1" asp-page-handler="DeleteSession" asp-route-movieId="@Model.Movie.Id" asp-route-sessionId="@session.Id">Видалити</button>
+                                </form>
+                            </td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        @foreach(var session in Model.Movie.Sessions)
-                        {
-                            <tr>
-                                <th scope="row">@session.Id</th>
-                                <td>@session.Date.ToShortDateString()</td>
-                                <td>@session.Time</td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
+                    }
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

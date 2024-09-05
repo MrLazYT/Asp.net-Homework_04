@@ -1,0 +1,35 @@
+﻿@page "{id}"
+@model homework_04.Pages.Movies.EditModel
+@{
+}
+
+<form method="post">
+	<div>
+		<label class="form-label m-1" asp-for="Movie.Title">Назва</label>
+		<input class="form-control m-1" asp-for="Movie.Title" value="@Model.Movie.Title" />
+	</div>
+
+	<div>
+		<label class="form-label m-1" asp-for="Movie.Poster">Постер</label>
+		<input class="form-control m-1" asp-for="Movie.Poster" value="@Model.Movie.Poster" />
+	</div>
+
+	<div>
+		<label class="form-label m-1" asp-for="Movie.Director">Режисер</label>
+		<input class="form-control m-1" asp-for="Movie.Director" value="@Model.Movie.Director" />
+	</div>
+
+	<div>
+		<label class="form-label m-1" asp-for="Movie.Style">Жанр</label>
+		<input class="form-control m-1" asp-for="Movie.Style" value="@Model.Movie.Style" />
+	</div>
+
+	<div>
+		<label class="form-label m-1" asp-for="Movie.ShortDescription">Короткий опис</label>
+		<input class="form-control m-1" asp-for="Movie.ShortDescription" value="@Model.Movie.ShortDescription" />
+	</div>
+
+	<div>
+		<button class="btn btn-primary m-1" asp-route-id="@Model.Movie.Id">Зберегти</button>
+	</div>
+</form>
